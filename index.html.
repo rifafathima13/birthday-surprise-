@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff0f3">
+<title>For My Faizal ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Poppins:wght@400;500;600;700&display=swap');
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  color:#70434d;
+  background:#fff0f3;
+  text-align:center;
+  overflow-x:hidden;
+}
+button{font:inherit;cursor:pointer}
+.page{
+  min-height:100vh;
+  padding:35px 18px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  position:relative;
+}
+.page.active{display:flex;animation:appear .7s ease}
+@keyframes appear{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.card{
+  width:100%;
+  max-width:430px;
+  background:#fffaf7;
+  padding:30px 22px;
+  border:2px solid #f7c8d0;
+  border-radius:25px;
+  box-shadow:0 12px 35px #d77e8c22;
+}
+h1,h2{
+  font-family:'Playfair Display',serif;
+  color:#bd526c;
+}
+h1{font-size:clamp(30px,8vw,43px);margin:12px 0}
+h2{font-size:30px}
+p{line-height:1.8}
+.small{font-size:13px;color:#a76b78}
+.emoji{font-size:54px}
+.primary{
+  border:0;
+  border-radius:30px;
+  padding:13px 24px;
+  background:#d85f7d;
+  color:white;
+  box-shadow:0 5px 12px #d85f7d30;
+  margin-top:15px;
+}
+.primary:active,.gift:active{transform:scale(.97)}
+.dots{letter-spacing:10px;font-size:25px;margin:17px}
+.keypad{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  max-width:280px;
+  margin:20px auto 5px;
+}
+.key{
+  border:1px solid #f4ccd4;
+  border-radius:17px;
+  padding:14px;
+  background:#fff0f3;
+  color:#a64760;
+  font-size:21px;
+}
+.key:active{background:#f8d2db}
+.error{color:#cf4565;font-size:13px;min-height:20px}
+.decor{font-size:23px;margin:10px}
+.gifts{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:9px;
+  width:100%;
+  max-width:430px;
+  margin:20px 0;
+}
+.gift{
+  min-width:0;
+  padding:17px 4px;
+  border:2px solid #f5c3ce;
+  border-radius:18px;
+  background:#fffaf7;
+  color:#a64760;
+  transition:.25s;
+}
+.gift span{display:block;font-size:39px;margin-bottom:8px}
+.gift small{font-size:11px}
+.reveal{
+  display:none;
+  width:100%;
+  max-width:420px;
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  border:1px dashed #d85f7d;
+  margin:10px 0;
+  animation:appear .5s;
+}
+.reveal.show{display:block}
+.letter{
+  text-align:left;
+  font-family:'Playfair Display',serif;
+  font-size:17px;
+  line-height:1.95;
+  background:#fffaf7;
+  padding:25px 20px;
+  border-radius:5px;
+  border:1px solid #efc7ce;
+  box-shadow:5px 6px 0 #f4cbd3;
+  max-width:430px;
+  width:100%;
+}
+.letter p{white-space:normal}
+.heart{
+  position:fixed;
+  bottom:-30px;
+  pointer-events:none;
+  animation:floatUp 6s linear forwards;
+  z-index:5;
+}
+@keyframes floatUp{
+  to{transform:translateY(-110vh) rotate(25deg);opacity:0}
+}
+#musicBox{display:none;margin:20px auto 0;max-width:100%}
+#musicBox iframe{width:100%;max-width:350px;height:197px;border:0;border-radius:15px}
+footer{font-size:11px;color:#b47d87;margin-top:20px}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD PAGE -->
+<section class="page active" id="lock">
+  <div class="card">
+    <div class="decor">🎀 💗 🎀</div>
+    <div class="emoji">🔐</div>
+    <h1>A Little Surprise</h1>
+    <p>Someone special made this just for you...</p>
+    <p><b>Only my special person can enter ❤️</b></p>
+
+    <div id="dots" class="dots">○ ○ ○ ○</div>
+
+    <div class="keypad">
+      <button class="key" onclick="digit('1')">1</button>
+      <button class="key" onclick="digit('2')">2</button>
+      <button class="key" onclick="digit('3')">3</button>
+      <button class="key" onclick="digit('4')">4</button>
+      <button class="key" onclick="digit('5')">5</button>
+      <button class="key" onclick="digit('6')">6</button>
+      <button class="key" onclick="digit('7')">7</button>
+      <button class="key" onclick="digit('8')">8</button>
+      <button class="key" onclick="digit('9')">9</button>
+      <button class="key" onclick="erase()">⌫</button>
+      <button class="key" onclick="digit('0')">0</button>
+      <button class="key" onclick="checkCode()">♥️</button>
+    </div>
+    <div class="error" id="error"></div>
+    <p class="small">Hint: Four special numbers 💌</p>
+  </div>
+</section>
+
+<!-- WELCOME PAGE -->
+<section class="page" id="welcome">
+  <div class="card">
+    <div class="emoji">🎂💗🎂</div>
+    <p>To my favourite person,</p>
+    <h1>Happy Birthday,<br>Faizal! ❤️</h1>
+    <p>Today is all about you, my love.</p>
+    <p>I've made a tiny world of love just for you. Every little surprise comes straight from my heart. 🥹</p>
+    <div class="decor">💌 🧸 🌷</div>
+    <button class="primary" onclick="go('gifts')">Open Your Gifts 🎁</button>
+  </div>
+</section>
+
+<!-- GIFTS PAGE -->
+<section class="page" id="gifts">
+  <div class="card">
+    <div class="emoji">🎁</div>
+    <h1>Three Little Surprises</h1>
+    <p>Choose a gift, baby. Each one has a little piece of my heart. 💗</p>
+
+    <div class="gifts">
+      <button class="gift" onclick="reveal(1)">
+        <span>🎁</span><small>Gift One</small>
+      </button>
+      <button class="gift" onclick="reveal(2)">
+        <span>🎀</span><small>Gift Two</small>
+      </button>
+      <button class="gift" onclick="reveal(3)">
+        <span>💝</span><small>Gift Three</small>
+      </button>
+    </div>
+
+    <div class="reveal" id="gift1">
+      <div class="emoji">🤗</div>
+      <h2>A Million Hugs</h2>
+      <p>If I were beside you right now, I'd give you the biggest hug and never want to let go. Sending you all my love! ❤️</p>
+    </div>
+
+    <div class="reveal" id="gift2">
+      <div class="emoji">🌹</div>
+      <h2>A Thousand Kisses</h2>
+      <p>If I could give you one rose for every reason I love you, you'd have the most beautiful garden in the world. 🌷</p>
+    </div>
+
+    <div class="reveal" id="gift3">
+      <div class="emoji">💌</div>
+      <h2>My Promise</h2>
+      <p>I will keep choosing you, cheering for you, and celebrating every little happiness in your life. You matter so much to me. 💗</p>
+    </div>
+
+    <button class="primary" onclick="go('letter')">Read My Letter 💌</button>
+  </div>
+</section>
+
+<!-- LOVE LETTER PAGE -->
+<section class="page" id="letter">
+  <div class="emoji">💌</div>
+  <h1>To My Faizal</h1>
+  <div class="letter">
+    <p>My dearest Faizal, ❤️</p>
+    <p>Happy Birthday, baby! 🥹💗</p>
+    <p>I wish I could be right beside you today, see your beautiful smile, and make you feel just how special you are to me.</p>
+    <p>You have a place in my heart that nobody else could ever fill. Even the smallest moments with you mean more to me than I can explain.</p>
+    <p>On your birthday, I wish you happiness, good health, peace, success, and all the beautiful things your heart dreams of. I hope this new chapter brings you countless reasons to smile.</p>
+    <p>No website or gift could ever fully explain what you mean to me. But I hope this little surprise reminds you that someone is thinking of you with so much love. 🫶</p>
+    <p>Thank you for being you, Faizal. Today is your day, and I hope you feel loved in every possible way.</p>
+    <p>Happy Birthday once again, my favourite person! 🎂</p>
+    <p>Forever sending you hugs and love,</p>
+    <p><b>Your special person ❤️</b></p>
+  </div>
+
+  <button class="primary" onclick="go('music')">One Last Surprise 🎶</button>
+</section>
+
+<!-- MUSIC PAGE -->
+<section class="page" id="music">
+  <div class="card">
+    <div class="emoji">🎶💗🎶</div>
+    <h1>Our Little Song</h1>
+    <p>For you, Faizal — <i>Perfect</i> by Ed Sheeran. ❤️</p>
+    <p>Take a moment, relax, and enjoy this little musical surprise.</p>
+
+    <button class="primary" id="playButton" onclick="playSong()">Play Our Song 🎵</button>
+
+    <div id="musicBox">
+      <iframe
+        id="player"
+        title="Perfect by Ed Sheeran"
+        src="about:blank"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <p>Some people make ordinary days feel special. You are one of those people to me. 💗</p>
+    <div class="decor">🌷 ❤️ 🌷</div>
+    <button class="primary" onclick="go('welcome')">Replay Our Surprise 💕</button>
+    <footer>Made with love, just for Faizal ❤️</footer>
+  </div>
+</section>
+
+<script>
+let code = "";
+
+function updateDots(){
+  document.getElementById("dots").textContent =
+    Array.from({length:4},(_,i)=>i<code.length?"●":"○").join(" ");
+}
+
+function digit(n){
+  if(code.length>=4)return;
+  code+=n;
+  updateDots();
+  document.getElementById("error").textContent="";
+  if(code.length===4){
+    setTimeout(checkCode,180);
+  }
+}
+
+function erase(){
+  code=code.slice(0,-1);
+  updateDots();
+  document.getElementById("error").textContent="";
+}
+
+function checkCode(){
+  if(code==="1323"){
+    go("welcome");
+    burstHearts();
+  }else{
+    document.getElementById("error").textContent="Oops! Try again, sweetheart 💗";
+    code="";
+    updateDots();
+  }
+}
+
+function go(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+  burstHearts();
+}
+
+function reveal(n){
+  const box=document.getElementById("gift"+n);
+  const wasOpen=box.classList.contains("show");
+  document.querySelectorAll(".reveal").forEach(el=>el.classList.remove("show"));
+  if(!wasOpen)box.classList.add("show");
+  burstHearts();
+}
+
+function playSong(){
+  document.getElementById("musicBox").style.display="block";
+  document.getElementById("player").src=
+    "https://www.youtube-nocookie.com/embed/2Vv-BfVoq4g?autoplay=1&rel=0";
+  document.getElementById("playButton").textContent="Our Song Is Ready 💗";
+}
+
+function burstHearts(){
+  const symbols=["💗","💕","❤️","💖","🌸"];
+  for(let i=0;i<9;i++){
+    const h=document.createElement("span");
+    h.className="heart";
+    h.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(16+Math.random()*17)+"px";
+    h.style.animationDuration=(4+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7500);
+  }
+}
+</script>
+</body>
+</html>
